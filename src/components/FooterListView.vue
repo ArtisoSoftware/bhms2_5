@@ -1,5 +1,9 @@
 <template>
-  <div class="d-flex row items-center" style="height: 100%">
+  <div
+    class="d-flex row items-center cursor-pointer"
+    style="height: 100%"
+    @click="showDetail()"
+  >
     <div class="col-12 q-pb-sm" style="height: 192px">
       <div class="boxDia row">
         <div class="col column">
@@ -66,6 +70,9 @@
 <script setup>
 import { defineProps } from "vue";
 import { ref, onMounted, watch, toRaw } from "vue";
+import { defineEmits } from "vue";
+
+const emit = defineEmits(["sensorName"]);
 
 const props = defineProps({
   name: String,
@@ -79,6 +86,10 @@ const sensorRawData = ref([]);
 const sensorMax = ref(0);
 const sensorColor = ref("");
 const sensorDetailColor = ref([]);
+
+const showDetail = () => {
+  emit("sensorName", sensorName.value);
+};
 
 const reloadData = () => {
   sensorName.value = props.name;

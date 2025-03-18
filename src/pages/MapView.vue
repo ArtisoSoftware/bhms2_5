@@ -115,14 +115,14 @@
             <div class="row justify-between" style="height: 100%">
               <div class="col row justify-center d-flex" style="height: 100%">
                 <FooterMapView
-                  name="M34/02"
+                  name="M34/10"
                   :data="senserData"
                   @sensorName="showDetail"
                 />
               </div>
               <div class="col row justify-center">
                 <FooterMapView
-                  name="M34/05"
+                  name="M34/14"
                   :data="senserData"
                   @sensorName="showDetail"
                 />
@@ -324,7 +324,12 @@
       </div>
     </div>
     <div class="footer"><FooterMain /></div>
-    <FooterDetail v-if="isDetail" @close-dialog="isDetail = false" />
+    <FooterDetail
+      :name="sensorDetailName"
+      :data="senserData"
+      v-if="isDetail"
+      @close-dialog="isDetail = false"
+    />
   </div>
 </template>
 
@@ -338,6 +343,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import FooterDetail from "../components/FooterDetail.vue";
 const senserData = ref([]);
 const isDetail = ref(false);
+const sensorDetailName = ref("");
 let reloadData = null;
 
 const loadDataFromServer = async () => {
@@ -348,7 +354,7 @@ const loadDataFromServer = async () => {
 
 const showDetail = (name) => {
   isDetail.value = true;
-  // alert(name);
+  sensorDetailName.value = name;
 };
 
 onMounted(() => {
