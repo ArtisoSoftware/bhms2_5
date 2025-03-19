@@ -739,6 +739,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .DurationBox {
   width: 100%;
+  max-width: 1200px;
   height: 90px;
   margin: auto;
   border: 1px solid #c4c4c4;
