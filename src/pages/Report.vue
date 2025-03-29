@@ -41,7 +41,7 @@
           </div>
         </q-btn>
       </div>
-      <div ref="content" class="text-black">
+      <div ref="content" class="text-black" v-if="showReport">
         <div class="printPage fontContent q-px-lg">
           <div class="q-py-lg">
             <div class="fontTitle q-pt-md" align="center">
@@ -347,6 +347,7 @@ const loadInit = () => {
 };
 
 const genReport = async () => {
+  console.log("genReport");
   showReport.value = false;
   let url = serverAPI() + "graphtrend.php";
   let tempData = {
@@ -356,8 +357,12 @@ const genReport = async () => {
     yend: String(YStart.value),
     plottype: "Maximum",
   };
+
   let response = await axios.post(url, tempData);
   rawData.value = response.data;
+  console.log("test", rawData.value);
+
+  console.log(rawData.value.length);
   if (rawData.value.length == 0) {
     console.log("No data");
     return;
@@ -597,9 +602,8 @@ const genReport = async () => {
     S4: rawData.value.SG104,
     S5: rawData.value.SG105,
   });
-  console.log(rawData.value);
+
   showReport.value = true;
-  console.log("Generate report");
 };
 
 const convertMonth = (monthId) => {

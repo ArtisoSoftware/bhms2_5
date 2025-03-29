@@ -3,8 +3,21 @@
     <div style="width: 300px">
       <img src="../../public/images/loading.svg" alt="" style="height: 100px" />
     </div>
-    <div style="width: 800px" class="row">
-      <div class="col row justify-center q-pt-lg">
+    <div class="row">
+      <q-btn-toggle
+        v-model="menu"
+        toggle-color="primary"
+        text-color="white"
+        no-caps
+        :options="options"
+        @update:model-value="goToView()"
+        dark
+        class="qMenu"
+        size="18px"
+        spread
+        style="width: 600px"
+      />
+      <!-- <div class="col row justify-center q-pt-lg">
         <q-btn
           no-caps
           :class="menu == '1' ? 'btnSelect' : 'btnMenu'"
@@ -48,13 +61,13 @@
           @click="goTDocument()"
           >Document</q-btn
         >
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -65,6 +78,34 @@ const props = defineProps({
     required: true,
   },
 });
+
+const options = ref([
+  { label: "Map view", value: "1" },
+  { label: "List view", value: "2" },
+  { label: "Trend", value: "3" },
+  { label: "Report", value: "4" },
+  { label: "Document", value: "5" },
+]);
+const menu = ref(props.menu);
+const goToView = () => {
+  switch (menu.value) {
+    case "1":
+      goToMapView();
+      break;
+    case "2":
+      goToListView();
+      break;
+    case "3":
+      goToTrend();
+      break;
+    case "4":
+      goToReport();
+      break;
+    case "5":
+      goTDocument();
+      break;
+  }
+};
 
 const goToMapView = () => {
   router.push("/mapview");
@@ -97,5 +138,14 @@ const goTDocument = () => {
   background-color: #2f3c88;
   color: white;
   font-size: 16px;
+}
+.qMenu {
+  height: 60px;
+  color: white;
+  font-size: 16px;
+  border-radius: 10px;
+
+  margin-top: 20px;
+  border: 1px solid white;
 }
 </style>
